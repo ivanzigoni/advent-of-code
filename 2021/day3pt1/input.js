@@ -999,6 +999,19 @@ const inputString = `011111111101
 010110000000
 100111111100`
 
+const inputString1 = `00100
+11110
+10110
+10111
+10101
+01111
+00111
+11100
+10000
+11001
+00010
+01010`
+
 const inputArray = inputString.split('\n');
 
 export default inputArray;

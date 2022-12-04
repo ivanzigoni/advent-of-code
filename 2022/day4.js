@@ -2,7 +2,7 @@ const fs = require("fs");
 
 const input = fs.readFileSync('./day4.input.txt', 'utf-8');
 
-function part1() {
+function day4() {
 
   const { count, overlaps } = input.split("\n").reduce((acc, line) => {
     
@@ -37,4 +37,4 @@ function part1() {
   console.log(count, overlaps);
 }
 
-part1();
+day4();

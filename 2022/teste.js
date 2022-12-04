@@ -1,7 +1,3 @@
-const num = 5;
+const line = 'JppMDcJPcQbqGqFb'
 
-if (num > 1) {
-  console.log('aqui')
-} else if (num > 3) {
-  console.log('aqui2')
-}
+console.log(line.split(''))

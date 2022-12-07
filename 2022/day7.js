@@ -3,17 +3,17 @@ const fs = require('fs');
 const input = fs.readFileSync('./day7.input.txt', 'utf-8').split('\n');
 
 class Dir {
-  name;
+  path;
   parentDir;
   size = 0;
 
-  constructor(name) {
-    this.name = name;
+  constructor(path) {
+    this.path = path;
   }
 
   setSize(file) {
     const [size] = file.split(' ');
-    this.size += +size;
+    this.size += Number(size);
   }
 
   addFile(file) {
@@ -24,9 +24,9 @@ class Dir {
   }
 }
 
-const root = new Dir('/')
+const root = new Dir('/');
 
-function part1(
+function part1and2(
   dirMap = { '/': root },
   currentDir = root, 
   index = 0
@@ -35,32 +35,38 @@ function part1(
   const line = input[index];
   
   if (!line) {
+    const spaceAvailable = (70000000 - dirMap['/'].size);
+    const selectForDeletion = (x) => x + spaceAvailable >= 30000000;
+
     console.log(
-      Object.values(dirMap).reduce((acc, dir) => {
+      Object.values(dirMap)
+        .sort((a, b) => b.size - a.size)
+        .reduce((acc, dir) => {
         if (dir.size <= 100000) {
           acc.result += dir.size;
         }
-        if (dir.parentDir) {
-          acc.onlyParent += dir.parentDir.size;
+
+        if (selectForDeletion(dir.size)) {
+          acc.dirForDeletion = dir;
         }
-        acc.total += dir.size
+
         return acc;
-      }, { result: 0, total: 0, onlyParent: 0 })
+      }, { result: 0, dirForDeletion: {} })
     )
-    return
+    return;
   }
 
   if (line[0] === '$') {
     // command
 
-    const [_, command, destination] = line.split(' ')
+    const [_, command, destination] = line.split(' ');
 
     if (command === 'cd') {
 
       if (destination === '..') {
         currentDir = currentDir.parentDir;
       } else {
-        currentDir = dirMap[destination];
+        currentDir = dirMap[`${currentDir.path}/${destination}`];
       }
 
     } else if (command === 'ls') {
@@ -69,13 +75,16 @@ function part1(
 
   } else if (line[0] === 'd') {
     // directory
-    const [_, dirName] = line.split(' ')
+
+    const [_, dirName] = line.split(' ');
     
-    if (!dirMap[dirName]) {
-      const newDir = new Dir(dirName)
+    let path = `${currentDir.path}/${dirName}`;
+    
+    if (!dirMap[path]) {
+      const newDir = new Dir(path)
       newDir.parentDir = currentDir;
 
-      dirMap[dirName] = newDir;
+      dirMap[path] = newDir;
     }
 
 
@@ -86,7 +95,7 @@ function part1(
     currentDir.addFile(file);
   }
 
-  return part1(dirMap, currentDir, index += 1)
+  return part1and2(dirMap, currentDir, index += 1)
 }
 
-part1();
+part1and2();

@@ -1,8 +1,8 @@
 const fs = require("fs")
 
-const input = fs.readFileSync("day2.input.txt", "utf-8")
+const input = fs.readFileSync("input.txt", "utf-8")
 
-const occurrenceLimits = {
+const occurrencesLimits = {
   red: 12,
   green: 13,
   blue: 14
@@ -20,6 +20,19 @@ function parseLine(line) {
 
 }
 
+function validateGame(game) {
+  return game
+    .replaceAll(";", ",")
+    .split(",")
+    .every((reveal) => {
+
+      const [occurence, color] = reveal.trim().split(" ");
+
+      return Number(occurence) <= occurrencesLimits[color]
+
+    })
+}
+
 function main() {
 
   const lines = input.split("\n");
@@ -31,27 +44,14 @@ function main() {
       game
     } = parseLine(line);
 
-    const isGameValid = game
-      .replaceAll(";", ",")
-      .split(",")
-      .every((reveal) => {
+    const gameIsValid = validateGame(game);
 
-        const [occurence, color] = reveal.trim().split(" ");
-
-        if (Number(occurence) > occurrenceLimits[color]) {
-          return false;
-        } else {
-          return true;
-        }
-
-      })
-
-      if (isGameValid) {
-        acc.result += Number(gameId);
-      }
-
+    if (gameIsValid) {
+      acc.result += Number(gameId);
+    }
 
     return acc;
+
   }, { result: 0 })
 
 

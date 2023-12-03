@@ -1,33 +1,39 @@
 const fs = require("fs");
 
-const p = "/home/ivan/Documents/pessoal/repos/advent-of-code/2023/day1/part1.input.txt"
+const p = "input.txt"
 
 const input = fs.readFileSync(p, "utf-8");
+
+function isNum(char) {
+  return !isNaN(Number(char))
+}
 
 function main() {
 
   const lines = input.split("\n");
 
-  const { total } = lines.reduce((acc, line, i) => {
+  const { total } = lines.reduce((acc, line) => {
 
-    acc[i] = { first: null, last: null }
+    const specs = { first: null, last: null }
 
     for (const char of line) {
 
       if (!isNaN(Number(char))) {
         
-        if (!acc[i].first) {
-          acc[i].first = char;
-          acc[i].last = char;
+        if (!specs.first) {
+          specs.first = char;
+          specs.last = char;
         } else {
-          acc[i].last = char;
+          specs.last = char;
         }
 
       }
 
     }
 
-    acc.total += !isNaN(Number(`${acc[i].first}${acc[i].last}`)) ? Number(`${acc[i].first}${acc[i].last}`) : 0
+    const str = `${specs.first}${specs.last}`
+
+    acc.total += isNum(str) ? Number(str) : 0
 
     return acc;
 

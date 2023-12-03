@@ -1,12 +1,6 @@
 const fs = require("fs")
 
-const input = fs.readFileSync("day2.input.txt", "utf-8")
-
-const occurrenceLimits = {
-  red: 12,
-  green: 13,
-  blue: 14
-}
+const input = fs.readFileSync("input.txt", "utf-8")
 
 function parseLine(line) {
   const gameId = line.split(":")[0].split(" ")[1];
@@ -17,7 +11,25 @@ function parseLine(line) {
     gameId,
     game
   }
+}
 
+function getGamePower(game) {
+  const { blue, green, red } = game
+    .replaceAll(";", ",")
+    .split(",")
+    .reduce((acc, reveal) => {
+
+      const [occurrence, color] = reveal.trim().split(" ");
+
+      if (Number(occurrence) > acc[color]) {
+        acc[color] = Number(occurrence);
+      }
+
+      return acc;
+
+    }, { blue: 0, green: 0, red: 0 })
+
+    return blue * green * red
 }
 
 function main() {
@@ -27,30 +39,15 @@ function main() {
   const { result } = lines.reduce((acc, line) => {
 
     const {
-      gameId,
       game
     } = parseLine(line);
 
-    const { blue, green, red } = game
-      .replaceAll(";", ",")
-      .split(",")
-      .reduce((acc, reveal) => {
-
-        const [occurrence, color] = reveal.trim().split(" ");
-
-        if (Number(occurrence) > acc[color]) {
-          acc[color] = Number(occurrence);
-        }
-
-        return acc;
-
-      }, { blue: 0, green: 0, red: 0 })
-
-    const gamePower = blue * green * red
+    const gamePower = getGamePower(game);
 
     acc.result += gamePower;
 
     return acc;
+  
   }, { result: 0 })
 
 

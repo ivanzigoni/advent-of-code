@@ -1,4 +1,4 @@
-import input from './input.js';
+import parsedInput from './input.js';
 
-const { plays, boards } = input;
+const { plays, boards } = parsedInput;
 

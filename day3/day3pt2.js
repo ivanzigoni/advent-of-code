@@ -65,4 +65,4 @@ function funcReadFile(err, data) {
 
 }
 
-fs.readFile('./day3pt2.txt', funcReadFile)
+fs.readFile('./input.txt', funcReadFile)

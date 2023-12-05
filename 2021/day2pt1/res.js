@@ -1,5 +1,9 @@
-import inputArr from './input.js';
+const fs = require("fs")
 
+const inputString = fs.readFileSync("input.txt")
+
+const inputArr = inputString.split('\n');
+inputArr.shift();
 // solution 1
 const navigator = () => {
   let position = [0, 0];

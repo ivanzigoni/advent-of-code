@@ -1,4 +1,8 @@
-import inputArray from '../day3pt1/input.js';
+const fs = require("fs")
+
+const inputString = fs.readFileSync("input.txt")
+
+const inputArray = inputString.split('\n');
 
 const digitMapGenerator = (array, position) => {
   const digitMap = {zeroQuantity: 0, oneQuantity: 0};

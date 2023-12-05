@@ -1,4 +1,4 @@
-const inputString = `011111111101
+011111111101
 011000010111
 000000000101
 000111100001
@@ -1010,8 +1010,4 @@ const inputString1 = `00100
 10000
 11001
 00010
-01010`
-
-const inputArray = inputString.split('\n');
-
-export default inputArray;
+01010

@@ -1,4 +1,8 @@
-import inputArray from "./input.js";
+const fs = require("fs")
+
+const inputString = fs.readFileSync("input.txt")
+
+const inputArray = inputString.split('\n');
 
 const diagnostic = () => {
   const digitMap = [];

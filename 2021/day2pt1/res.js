@@ -1,6 +1,6 @@
 const fs = require("fs")
 
-const inputString = fs.readFileSync("input.txt")
+const inputString = fs.readFileSync("input.txt", "utf-8")
 
 const inputArr = inputString.split('\n');
 inputArr.shift();

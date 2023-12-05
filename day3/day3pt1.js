@@ -35,4 +35,4 @@ function funcReadFile(err, data) {
   console.log(Object.keys(map).length);
 }
 
-fs.readFile('./day3pt1.txt', funcReadFile)
+fs.readFile('./input.txt', funcReadFile)

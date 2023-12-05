@@ -18,7 +18,7 @@ function main() {
 
     for (const char of line) {
 
-      if (!isNaN(Number(char))) {
+      if (isNum(char)) {
         
         if (!specs.first) {
           specs.first = char;
